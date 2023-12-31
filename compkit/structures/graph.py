@@ -15,10 +15,13 @@ from compkit.core import ID, Node, Link
 class Graph:
     """Base class for all graphs."""
 
-    def __init__(self) -> None:
+    def __init__(self, nodes: list[Node], edges: list[Link]) -> None:
         self.nodes: dict[ID, Node] = {}
         self.edges: dict[ID, Link] = {}
         self.graph: dict[ID, dict[ID, set[ID]]] = {}  # node -> node -> edges
+
+        self.add_nodes(nodes)
+        self.add_edges(edges)
 
     def null(self) -> bool:
         """Check if G has no nodes.
@@ -826,11 +829,14 @@ class Graph:
 class DiGraph(Graph):
     """Base class for digraphs."""
 
-    def __init__(self) -> None:
+    def __init__(self, nodes: list[Node], edges: list[Link]) -> None:
         self.nodes: dict[ID, Node] = {}
         self.edges: dict[ID, Link] = {}
         self.forwardG: dict[ID, dict[ID, set[ID]]] = {}  # node -> node -> edges
         self.reverseG: dict[ID, dict[ID, set[ID]]] = {}  # node -> node -> edges
+
+        self.add_nodes(nodes)
+        self.add_edges(edges)
 
     def add_node(self, x: Node) -> None:
         if x.uid in self.nodes:
