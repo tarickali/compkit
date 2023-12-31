@@ -13,7 +13,7 @@ from compkit.core import ID, Node, Link
 
 
 class Graph:
-    """A simple Graph."""
+    """Base class for all graphs."""
 
     def __init__(self) -> None:
         self.nodes: dict[ID, Node] = {}
@@ -127,6 +127,26 @@ class Graph:
         """
 
         return self.nodes.get(xid)
+
+    def get_nodes(self, as_nodes: bool = False) -> list[ID] | list[Node]:
+        """Get all the nodes of G.
+
+        Parameters
+        ----------
+        as_nodes : bool = False
+            Determines if the return value is ID or Node
+
+        Returns
+        -------
+        list[ID] | list[Node]
+            If as_nodes = True, returns list[Node], otherwise returns an list[ID]
+
+        """
+
+        if as_nodes:
+            return list(self.nodes.values())
+        else:
+            return list(self.nodes.keys())
 
     def choose_node(self, as_nodes: bool = False) -> ID | Node:
         """Randomly choose a node from G.
@@ -271,6 +291,26 @@ class Graph:
         """
 
         return self.edges.get(eid)
+
+    def get_edges(self, as_links: bool = False) -> list[ID] | list[Link]:
+        """Get all the edges of G.
+
+        Parameters
+        ----------
+        as_links : bool = False
+            Determines if the return value is ID or Link
+
+        Returns
+        -------
+        list[ID] | list[Link]
+            If as_links = True, returns list[Link], otherwise returns an list[ID]
+
+        """
+
+        if as_links:
+            return list(self.edges.values())
+        else:
+            return list(self.edges.keys())
 
     def choose_edge(self, as_links: bool = False) -> ID | Link:
         """Randomly choose an edge from G.
