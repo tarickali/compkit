@@ -1,7 +1,7 @@
 """
 title : graphs.py
 create : @tarickali 23/12/30
-update : @tarickali 23/12/30
+update : @tarickali 23/12/31
 """
 
 import random
@@ -10,6 +10,16 @@ import itertools
 from compkit.structures import Graph, DiGraph
 
 from .types import create_nodes, create_links
+
+__all__ = [
+    "cycle_graph",
+    "path_graph",
+    "complete_graph",
+    "random_graph",
+    "complete_bipartite_graph",
+    "random_bipartite_graph",
+    "peterson_graph",
+]
 
 
 def cycle_graph(
@@ -41,7 +51,7 @@ def cycle_graph(
     if n <= 2:
         raise ValueError(f"Cannot create a cycle graph with {n}<=2 nodes.")
 
-    nodes = create_nodes(list(range(n)))
+    nodes = create_nodes(range(n))
 
     if not directed:
         edges = create_links(
@@ -90,7 +100,7 @@ def path_graph(
     if n <= 1:
         raise ValueError(f"Cannot create a path graph with {n}<=1 nodes.")
 
-    nodes = create_nodes(list(range(n)))
+    nodes = create_nodes(range(n))
 
     if not directed:
         edges = create_links([(i, i, i + 1) for i in range(n - 1)])
@@ -126,7 +136,7 @@ def complete_graph(n: int) -> Graph:
     if n <= 0:
         raise ValueError(f"Cannot create a complete with {n}<=0 nodes.")
 
-    nodes = create_nodes(list(range(n)))
+    nodes = create_nodes(range(n))
 
     edges = []
     e = 0
@@ -182,7 +192,7 @@ def random_graph(n: int, size: int, directed: bool = False) -> Graph | DiGraph:
             f"Cannot create a random digraph with {n} nodes and {size} edges."
         )
 
-    nodes = create_nodes(list(range(n)))
+    nodes = create_nodes(range(n))
 
     if not directed:
         population = list(itertools.combinations(range(n), 2))
@@ -196,10 +206,6 @@ def random_graph(n: int, size: int, directed: bool = False) -> Graph | DiGraph:
         return Graph(nodes, edges)
     else:
         return DiGraph(nodes, edges)
-
-
-def regular_graph(n: int, k: int) -> Graph:
-    pass
 
 
 def complete_bipartite_graph(n: int, m: int) -> Graph:
@@ -290,7 +296,7 @@ def peterson_graph() -> Graph:
 
     """
 
-    nodes = create_nodes(list(range(10)))
+    nodes = create_nodes(range(10))
     edges = create_links(
         [(i, i, i + 1) for i in range(4)]
         + [(4, 4, 0)]

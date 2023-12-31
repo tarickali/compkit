@@ -1,7 +1,7 @@
 """
 title : graph.py
 create : @tarickali 23/12/27
-update : @tarickali 23/12/29
+update : @tarickali 23/12/31
 """
 
 from __future__ import annotations
@@ -853,7 +853,7 @@ class DiGraph(Graph):
             return None
 
         for yid in self.forwardG[xid]:
-            eids = self.forwardG[yid].pop(xid)
+            eids = self.reverseG[yid].pop(xid)
             for eid in eids:
                 self.edges.pop(eid)
         self.forwardG.pop(xid)
@@ -1086,12 +1086,29 @@ class DiGraph(Graph):
         self.forwardG.clear()
         self.reverseG.clear()
 
-    def reverse(self) -> None:
-        """Reverse the edges of G inplace."""
+    def transpose(self, inplace: bool = True) -> DiGraph:
+        """Reverse the edges of D.
 
-        for _, e in self.edges.items():
-            e.xid, e.yid = e.yid, e.xid
-        self.forwardG, self.reverseG = self.reverseG, self.forwardG
+        Parameters
+        ----------
+        inplace : bool = True
+            Determines if the edges of D are reversed inplace or not
+
+        Returns
+        -------
+        DiGraph
+            If inplace = True, returns a shallow copy of D, otherwise returns
+            a deepcopy of D
+
+        """
+
+        D = self if inplace else self.copy()
+
+        for e in D.get_edges(as_links=True):
+            D.edges[e.uid] = Link(e.uid, e.yid, e.xid, e.data)
+        D.forwardG, D.reverseG = D.reverseG, D.forwardG
+
+        return D
 
     def to_undirected(self) -> Graph:
         G = Graph()

@@ -1,22 +1,24 @@
 """
 title : types.py
 create : @tarickali 23/12/27
-update : @tarickali 23/12/30
+update : @tarickali 23/12/31
 """
 
-from typing import Any
+from typing import Any, Iterable
 
 from compkit.core import ID, Node, Link
 
 __all__ = ["create_nodes", "create_links"]
 
 
-def create_nodes(items: list[ID] | dict[ID, dict[str, Any]]) -> list[Node]:
+def create_nodes(items: Iterable[ID] | dict[ID, dict[str, Any]]) -> list[Node]:
     """Create Node objects given uids or (uid, data) pairs.
 
     Parameters
     ----------
-    items : list[ID] | dict[ID, dict[str, Any]]
+    items : Iterable[ID] | dict[ID, dict[str, Any]]
+        If isinstance(items, Iterable) it is of the form x.uid, otherwise
+        the dictionary is of the form x.uid -> data
 
     Returns
     -------
@@ -25,7 +27,7 @@ def create_nodes(items: list[ID] | dict[ID, dict[str, Any]]) -> list[Node]:
     """
 
     nodes = []
-    if isinstance(items, list):
+    if isinstance(items, Iterable):
         for uid in items:
             nodes.append(Node(uid))
     else:
@@ -35,13 +37,15 @@ def create_nodes(items: list[ID] | dict[ID, dict[str, Any]]) -> list[Node]:
 
 
 def create_links(
-    items: list[tuple[ID, ID, ID]] | dict[ID, tuple[ID, ID, dict[str, Any]]]
+    items: Iterable[tuple[ID, ID, ID]] | dict[ID, tuple[ID, ID, dict[str, Any]]]
 ) -> list[Link]:
     """Create Link objects given a dictionary of (uid, (xid, yid, data)) pairs.
 
     Parameters
     ----------
-    items : list[tuple[ID, ID, ID]] | dict[ID, tuple[ID, ID, dict[str, Any]]]
+    items : Iterable[tuple[ID, ID, ID]] | dict[ID, tuple[ID, ID, dict[str, Any]]]
+        If isinstance(items, Iterable) the tuples are of the form (e.uid, e.xid, e.yid),
+        otherwise the dictionary is of the form e.uid -> (e.xid, e.yid, data)
 
     Returns
     -------
@@ -50,7 +54,7 @@ def create_links(
     """
 
     links = []
-    if isinstance(items, list):
+    if isinstance(items, Iterable):
         for uid, xid, yid in items:
             links.append(Link(uid, xid, yid))
     else:
