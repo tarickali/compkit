@@ -1,7 +1,7 @@
 """
 title : traversal.py
 create : @tarickali 23/12/30
-update : @tarickali 23/12/30
+update : @tarickali 23/12/31
 """
 
 from typing import Literal
@@ -10,7 +10,11 @@ from queue import Queue
 from compkit.core import ID, Node
 from compkit.structures import Graph
 
-__all__ = ["breadth_first_search", "depth_first_search", "graph_search"]
+__all__ = [
+    "breadth_first_search",
+    "depth_first_search",
+    "graph_search",
+]
 
 
 def breadth_first_search(
@@ -257,7 +261,7 @@ def graph_search(
         raise ValueError(f"Traversal method {traversal_method} is not supported.")
 
     # NOTE: do not need to update ignore or pass explored due to bfs/dfs guarantees
-    for x in G.nodes:
+    for x in G.get_nodes(as_nodes=as_nodes):
         if x not in explored and x not in ignore:
             component = traverse(G, x, ignore=ignore, as_nodes=as_nodes)
             explored |= component
