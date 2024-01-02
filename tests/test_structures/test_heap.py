@@ -19,6 +19,7 @@ def generate_data() -> list[Node]:
 def test_heap():
     # Test mode=min
     for _ in range(10):
+        print(generate_data())
         heap = Heap.heapify(generate_data(), label="val", mode="min")
 
         sorted_items = []

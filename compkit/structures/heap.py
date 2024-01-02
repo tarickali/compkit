@@ -1,7 +1,7 @@
 """
 title : heap.py
 create : @tarickali 23/12/27
-update : @tarickali 23/12/27
+update : @tarickali 24/01/01
 """
 
 from __future__ import annotations
@@ -640,5 +640,5 @@ class Heap:
         """
 
         if self.mode == "min":
-            return x.data[self.label] <= y.data[self.label]
-        return x.data[self.label] >= y.data[self.label]
+            return x[self.label] <= y[self.label]
+        return x[self.label] >= y[self.label]

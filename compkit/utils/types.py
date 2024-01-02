@@ -1,7 +1,7 @@
 """
 title : types.py
 create : @tarickali 23/12/27
-update : @tarickali 23/12/31
+update : @tarickali 24/01/01
 """
 
 from typing import Any, Iterable
@@ -27,12 +27,12 @@ def create_nodes(items: Iterable[ID] | dict[ID, dict[str, Any]]) -> list[Node]:
     """
 
     nodes = []
-    if isinstance(items, Iterable):
-        for uid in items:
-            nodes.append(Node(uid))
-    else:
+    if isinstance(items, dict):
         for uid, data in items.items():
             nodes.append(Node(uid, data))
+    else:
+        for uid in items:
+            nodes.append(Node(uid))
     return nodes
 
 
@@ -54,10 +54,10 @@ def create_links(
     """
 
     links = []
-    if isinstance(items, Iterable):
-        for uid, xid, yid in items:
-            links.append(Link(uid, xid, yid))
-    else:
+    if isinstance(items, dict):
         for uid, (xid, yid, data) in items.items():
             links.append(Link(uid, xid, yid, data))
+    else:
+        for uid, xid, yid in items:
+            links.append(Link(uid, xid, yid))
     return links

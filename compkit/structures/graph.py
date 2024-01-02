@@ -1,7 +1,7 @@
 """
 title : graph.py
 create : @tarickali 23/12/27
-update : @tarickali 23/12/31
+update : @tarickali 24/01/01
 """
 
 from __future__ import annotations
@@ -15,13 +15,15 @@ from compkit.core import ID, Node, Link
 class Graph:
     """Base class for all graphs."""
 
-    def __init__(self, nodes: list[Node], edges: list[Link]) -> None:
+    def __init__(self, nodes: list[Node] = None, edges: list[Link] = None) -> None:
         self.nodes: dict[ID, Node] = {}
         self.edges: dict[ID, Link] = {}
         self.graph: dict[ID, dict[ID, set[ID]]] = {}  # node -> node -> edges
 
-        self.add_nodes(nodes)
-        self.add_edges(edges)
+        if nodes is not None:
+            self.add_nodes(nodes)
+        if edges is not None:
+            self.add_edges(edges)
 
     def null(self) -> bool:
         """Check if G has no nodes.
@@ -829,14 +831,16 @@ class Graph:
 class DiGraph(Graph):
     """Base class for digraphs."""
 
-    def __init__(self, nodes: list[Node], edges: list[Link]) -> None:
+    def __init__(self, nodes: list[Node] = None, edges: list[Link] = None) -> None:
         self.nodes: dict[ID, Node] = {}
         self.edges: dict[ID, Link] = {}
         self.forwardG: dict[ID, dict[ID, set[ID]]] = {}  # node -> node -> edges
         self.reverseG: dict[ID, dict[ID, set[ID]]] = {}  # node -> node -> edges
 
-        self.add_nodes(nodes)
-        self.add_edges(edges)
+        if nodes is not None:
+            self.add_nodes(nodes)
+        if edges is not None:
+            self.add_edges(edges)
 
     def add_node(self, x: Node) -> None:
         if x.uid in self.nodes:

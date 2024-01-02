@@ -1,7 +1,7 @@
 """
 title : union_find.py
 create : @tarickali 23/12/28
-update : @tarickali 23/12/29
+update : @tarickali 24/01/01
 """
 
 from typing import Any
@@ -32,9 +32,12 @@ class UnionFind:
 
     """
 
-    def __init__(self) -> None:
-        self.items: dict[ID, Node]
+    def __init__(self, items: list[Node] = None) -> None:
+        self.items: dict[ID, Node] = {}
         self.datum: dict[ID, Data] = {}
+
+        if items is not None:
+            self.add_many(items)
 
     def add(self, item: Node) -> None:
         """Add and create a new partition for item in U.
@@ -52,6 +55,20 @@ class UnionFind:
 
         self.items[item.uid] = item
         self.datum[item.uid] = Data()
+
+    def add_many(self, items: list[Node]) -> None:
+        """Add and create a new partition for each item in items in U.
+
+        If an item in items is in U, then this method will ignore that item.
+
+        Parameters
+        ----------
+        items : list[Node]
+
+        """
+
+        for item in items:
+            self.add(item)
 
     def find(self, item: ID | Node) -> ID | None:
         """Find the representation ID of the partition of item in U.
