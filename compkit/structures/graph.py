@@ -1,7 +1,7 @@
 """
 title : graph.py
 create : @tarickali 23/12/27
-update : @tarickali 24/01/01
+update : @tarickali 24/01/02
 """
 
 from __future__ import annotations
@@ -1074,7 +1074,7 @@ class DiGraph(Graph):
         return sum([len(es) for es in self.reverseG[xid].values()])
 
     def copy(self) -> DiGraph:
-        """Returns a copy of D.
+        """Create a deepcopy of D.
 
         Returns
         -------
