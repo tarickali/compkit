@@ -1,14 +1,14 @@
 """
 title : test_heap.py
 create : @tarickali 23/12/27
-update : @tarickali 23/12/27
+update : @tarickali 24/01/06
 """
 
 import random
 
 from compkit.core import Node
 from compkit.structures import Heap
-from compkit.utils import create_nodes
+from compkit.utils.types import create_nodes
 
 
 def generate_data() -> list[Node]:

@@ -1,11 +1,11 @@
 """
 title : test_union_find.py
 create : @tarick 24/01/01
-update : @tarick 24/01/01
+update : @tarick 24/01/06
 """
 
 from compkit.structures import UnionFind
-from compkit.utils import create_nodes
+from compkit.utils.types import create_nodes
 
 
 def test_union_find():

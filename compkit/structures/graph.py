@@ -1,7 +1,7 @@
 """
 title : graph.py
 create : @tarickali 23/12/27
-update : @tarickali 24/01/02
+update : @tarickali 24/01/06
 """
 
 from __future__ import annotations
@@ -10,6 +10,7 @@ import random
 from collections import defaultdict
 
 from compkit.core import ID, Node, Link
+from compkit.utils.types import create_links
 
 
 class Graph:
@@ -634,7 +635,7 @@ class Graph:
         """
 
         for xid in self.nodes:
-            for yid in self.adjacent(yid):
+            for yid in self.adjacent(xid):
                 if len(self.get_edges_between(xid, yid)) > 1:
                     return True
         return False
@@ -651,6 +652,69 @@ class Graph:
         """
 
         return not self.has_loops() and not self.has_parallel_edges()
+
+    def complement(self, inplace: bool = True, include_loops: bool = False) -> Graph:
+        """Get the graph complement of G.
+
+        Parameters
+        ----------
+        inplace : bool = True
+            Determines if the G is modified inplace or not
+        include_loops : bool = False
+            Determines if the complement of G should include self-loops if G is simple
+
+        Returns
+        -------
+        Graph
+            If inplace = True, returns a shallow copy of G, otherwise returns
+            a deepcopy of G
+
+        Raises
+        ------
+        ValueError
+            If G is a multigraph (has parallel edges)
+
+        Warnings
+        --------
+        - Since this method involves dynamically creating new edges based on
+        the edges of G, the edges of the complement graph C will have uids
+        in the range 0 to len(C.edges) and all the edges will contain no data.
+
+        - If inplace = True, the edges of G will be removed and the associated
+        uid and data fields of each edge will be deleted.
+
+        Notes
+        -----
+        - If G has self-loops or include_loops is True, the complement of G is
+        defined by adding a self-loop to every node that does not have one in G.
+        In the case that G is a simple graph and include_loops is True, the
+        resulting graph will be a non-simple graph.
+
+        """
+
+        if self.has_parallel_edges():
+            raise ValueError(
+                "The complement of a multigraph (graph with parallel edges) is not defined."
+            )
+
+        C = self if inplace else self.copy()
+
+        nodes = C.get_nodes()
+        edges = C.get_edges(as_links=True)
+
+        comps = set()
+        for i in range(len(nodes)):
+            comps |= {(nodes[i], nodes[j]) for j in range(i + 1, len(nodes))}
+        if C.has_loops() or include_loops:
+            comps |= {(nodes[i], nodes[i]) for i in range(len(nodes))}
+        comps -= set.union(*[{e.nodes(), e.nodes(True)} for e in edges])
+
+        C.remove_edges(edges)
+        C.add_edges(
+            create_links((uid, xid, yid) for uid, (xid, yid) in enumerate(comps))
+        )
+
+        return C
 
     def copy(self) -> Graph:
         """Create a deepcopy of G.
@@ -1113,6 +1177,47 @@ class DiGraph(Graph):
         D.forwardG, D.reverseG = D.reverseG, D.forwardG
 
         return D
+
+    def complement(self, inplace: bool = True, include_loops: bool = False) -> DiGraph:
+        """Get the graph complement of D.
+
+        Parameters
+        ----------
+        inplace : bool = True
+            Determines if the D is modified inplace or not
+        include_loops : bool = False
+            Determines if the complement of D should include self-loops if D is simple
+
+        Returns
+        -------
+        DiGraph
+            If inplace = True, returns a shallow copy of D, otherwise returns
+            a deepcopy of D
+
+        Raises
+        ------
+        ValueError
+            If D is a multigraph (has parallel edges)
+
+        Warnings
+        --------
+        - Since this method involves dynamically creating new edges based on
+        the edges of D, the edges of the complement graph C will have uids
+        in the range 0 to len(C.edges) and all the edges will contain no data.
+
+        - If inplace = True, the edges of D will be removed and the associated
+        uid and data fields of each edge will be deleted.
+
+        Notes
+        -----
+        - If D has self-loops or include_loops is True, the complement of D is
+        defined by adding a self-loop to every node that does not have one in D.
+        In the case that D is a simple graph and include_loops is True, the
+        resulting graph will be a non-simple graph.
+
+        """
+
+        return super().complement(inplace=inplace, include_loops=include_loops)
 
     def to_undirected(self) -> Graph:
         G = Graph()

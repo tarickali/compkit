@@ -1,7 +1,7 @@
 """
 title : shortest_path.py
 create : @tarickali 23/12/31
-update : @tarickali 24/01/02
+update : @tarickali 24/01/06
 """
 
 from queue import Queue
@@ -9,7 +9,7 @@ from queue import Queue
 from compkit.core import ID, Node, Number
 from compkit.core.constants import Number, INF, DISTANCE, SPECIAL
 from compkit.structures import Heap, Graph, DiGraph
-from compkit.utils import create_links
+from compkit.utils.types import create_links
 
 __all__ = [
     "graph_layers",

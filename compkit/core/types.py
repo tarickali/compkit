@@ -1,7 +1,7 @@
 """
 title : types.py
 create : @tarickali 23/12/26
-update : @tarickali 23/12/27
+update : @tarickali 24/01/06
 """
 
 from __future__ import annotations
@@ -77,6 +77,9 @@ class Link:
     xid: ID
     yid: ID
     data: dict[str, Any] = field(default_factory=dict)
+
+    def nodes(self, reverse: bool = False) -> tuple[ID, ID]:
+        return (self.xid, self.yid) if not reverse else (self.yid, self.xid)
 
     def get(self, key: str, default: Any = None) -> Any:
         return self.data.get(key, default)
