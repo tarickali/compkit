@@ -1,12 +1,12 @@
 """
 title : test_sorting.py
 create : @tarickali 23/12/26
-update : @tarickali 23/12/26
+update : @tarickali 24/01/06
 """
 
 import random
 
-from compkit.algorithms.sorting import *
+from compkit.algorithms.array.sorting import *
 
 
 def generate_data() -> list[int]:
