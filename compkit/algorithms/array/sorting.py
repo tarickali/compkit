@@ -1,7 +1,7 @@
 """
 title : sorting.py
 create : @tarickali 23/12/26
-update : @tarickali 24/01/06
+update : @tarickali 24/01/07
 """
 
 import random
@@ -25,6 +25,7 @@ def bubble_sort(A: list[Number], inplace: bool = True) -> list[Number]:
     ----------
     A : list[Number]
     inplace : bool = True
+        Determines if A is modified, resulting in A being sorted
 
     Returns
     -------
@@ -57,6 +58,7 @@ def insertion_sort(A: list[Number], inplace: bool = True) -> list[Number]:
     ----------
     A : list[Number]
     inplace : bool = True
+        Determines if A is modified, resulting in A being sorted
 
     Returns
     -------
@@ -87,6 +89,7 @@ def selection_sort(A: list[Number], inplace: bool = True) -> list[Number]:
     ----------
     A : list[Number]
     inplace : bool = True
+        Determines if A is modified, resulting in A being sorted
 
     Returns
     -------
@@ -116,6 +119,7 @@ def merge_sort(A: list[Number], inplace: bool = True) -> list[Number]:
     ----------
     A : list[Number]
     inplace : bool = True
+        Determines if A is modified, resulting in A being sorted
 
     Returns
     -------
@@ -123,7 +127,7 @@ def merge_sort(A: list[Number], inplace: bool = True) -> list[Number]:
 
     """
 
-    def merge(l: int, m: int, r: int) -> list[Number]:
+    def merge(l: int, m: int, r: int) -> None:
         L = B[l:m] + [INF]
         R = B[m:r] + [INF]
 
@@ -158,6 +162,7 @@ def quick_sort(A: list[Number], inplace: bool = True) -> list[Number]:
     ----------
     A : list[Number]
     inplace : bool = True
+        Determines if A is modified, resulting in A being sorted
 
     Returns
     -------

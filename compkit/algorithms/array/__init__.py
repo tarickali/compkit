@@ -1,4 +1,6 @@
 from .sorting import *
+from .inversions import *
+from .search import *
 
 __all__ = [
     "bubble_sort",
@@ -6,4 +8,6 @@ __all__ = [
     "selection_sort",
     "merge_sort",
     "quick_sort",
+    "inversions",
+    "binary_search",
 ]
